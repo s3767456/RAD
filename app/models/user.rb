@@ -33,6 +33,14 @@ class User < ApplicationRecord
         update_attribute(:remember_digest, nil)
     end
 
+    def activate
+        update_columns(activated: FILL_IN, activated_at: FILL_IN)
+    end
+    
+    def send_activation_email
+        UserMailer.account_activation(self).deliver_now
+    end
+
     private
     
     # Converts email to all lower-case.
